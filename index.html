@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestor de Assinaturas e Gastos Recorrentes</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <h1 class="logo">
+                    <i class="fas fa-credit-card"></i>
+                    Gestor Financeiro
+                </h1>
+                <nav class="nav">
+                    <button class="nav-btn active" data-tab="dashboard">
+                        <i class="fas fa-chart-pie"></i>
+                        Dashboard
+                    </button>
+                    <button class="nav-btn" data-tab="users">
+                        <i class="fas fa-users"></i>
+                        Usuários
+                    </button>
+                    <button class="nav-btn" data-tab="subscriptions">
+                        <i class="fas fa-sync-alt"></i>
+                        Assinaturas
+                    </button>
+                    <button class="nav-btn" data-tab="expenses">
+                        <i class="fas fa-receipt"></i>
+                        Gastos Recorrentes
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main">
+            <div class="container">
+                <!-- Dashboard Tab -->
+                <div id="dashboard" class="tab-content active">
+                    <div class="dashboard-header">
+                        <h2>Dashboard Financeiro</h2>
+                        <div class="status-indicator">
+                            <span class="status-dot" id="backend-status"></span>
+                            <span id="backend-status-text">Verificando conexão...</span>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-sync-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="total-subscriptions">0</h3>
+                                <p>Assinaturas Ativas</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-receipt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="total-expenses">0</h3>
+                                <p>Gastos Recorrentes</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="monthly-total">R$ 0,00</h3>
+                                <p>Total Mensal</p>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h3 id="total-users">0</h3>
+                                <p>Usuários</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subscriptions Tab -->
+                <div id="subscriptions" class="tab-content">
+                    <div class="section-header">
+                        <h2>Assinaturas</h2>
+                        <button class="btn btn-primary" onclick="openModal('subscription-modal')">
+                            <i class="fas fa-plus"></i>
+                            Nova Assinatura
+                        </button>
+                    </div>
+                    <div class="cards-grid" id="subscriptions-grid">
+                        <!-- Subscription cards will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Expenses Tab -->
+                <div id="expenses" class="tab-content">
+                    <div class="section-header">
+                        <h2>Gastos Recorrentes</h2>
+                        <button class="btn btn-primary" onclick="openModal('expense-modal')">
+                            <i class="fas fa-plus"></i>
+                            Novo Gasto
+                        </button>
+                    </div>
+                    <div class="cards-grid" id="expenses-grid">
+                        <!-- Expense cards will be inserted here -->
+                    </div>
+                </div>
+
+                <!-- Users Tab -->
+                <div id="users" class="tab-content">
+                    <div class="section-header">
+                        <h2>Usuários</h2>
+                        <button class="btn btn-primary" onclick="openModal('user-modal')">
+                            <i class="fas fa-plus"></i>
+                            Novo Usuário
+                        </button>
+                    </div>
+                    <div class="cards-grid" id="users-grid">
+                        <!-- User cards will be inserted here -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- User Modal -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Novo Usuário</h3>
+                <button class="close-btn" onclick="closeModal('user-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="user-form">
+                <div class="form-group">
+                    <label for="user-username">Nome de Usuário</label>
+                    <input type="text" id="user-username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-email">Email</label>
+                    <input type="email" id="user-email" name="email" required>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('user-modal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Subscription Modal -->
+    <div id="subscription-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nova Assinatura</h3>
+                <button class="close-btn" onclick="closeModal('subscription-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="subscription-form">
+                <div class="form-group">
+                    <label for="subscription-name">Nome</label>
+                    <input type="text" id="subscription-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="subscription-description">Descrição</label>
+                    <textarea id="subscription-description" name="description"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="subscription-price">Preço</label>
+                        <input type="number" id="subscription-price" name="price" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subscription-cycle">Ciclo de Cobrança</label>
+                        <select id="subscription-cycle" name="billing_cycle" required>
+                            <option value="monthly">Mensal</option>
+                            <option value="yearly">Anual</option>
+                            <option value="weekly">Semanal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="subscription-date">Próxima Cobrança</label>
+                        <input type="date" id="subscription-date" name="next_billing_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="subscription-category">Categoria</label>
+                        <input type="text" id="subscription-category" name="category">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="subscription-user">Usuário</label>
+                    <select id="subscription-user" name="user_id" required>
+                        <option value="">Selecione um usuário</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('subscription-modal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Expense Modal -->
+    <div id="expense-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Novo Gasto Recorrente</h3>
+                <button class="close-btn" onclick="closeModal('expense-modal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="expense-form">
+                <div class="form-group">
+                    <label for="expense-name">Nome</label>
+                    <input type="text" id="expense-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="expense-description">Descrição</label>
+                    <textarea id="expense-description" name="description"></textarea>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="expense-amount">Valor</label>
+                        <input type="number" id="expense-amount" name="amount" step="0.01" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expense-frequency">Frequência</label>
+                        <select id="expense-frequency" name="frequency" required>
+                            <option value="monthly">Mensal</option>
+                            <option value="yearly">Anual</option>
+                            <option value="weekly">Semanal</option>
+                            <option value="daily">Diário</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="expense-date">Próximo Vencimento</label>
+                        <input type="date" id="expense-date" name="next_due_date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expense-category">Categoria</label>
+                        <input type="text" id="expense-category" name="category">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="expense-user">Usuário</label>
+                    <select id="expense-user" name="user_id" required>
+                        <option value="">Selecione um usuário</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal('expense-modal')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
